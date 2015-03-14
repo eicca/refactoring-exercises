@@ -25,15 +25,14 @@ class Customer
   private
 
   def total_charge
-    @rentals.reduce(0) do |sum, rental|
-      sum + rental.charge
-    end
+    total(@rentals) { |rental| rental.charge }
   end
 
   def total_frequent_renter_points
-    @rentals.reduce(0) do |sum, rental|
-      sum + rental.frequent_renter_points
-    end
+    total(@rentals) { |rental| rental.frequent_renter_points }
   end
 
+  def total(collection, &block)
+    collection.reduce(0) { |a, e| a + block[e] }
+  end
 end
